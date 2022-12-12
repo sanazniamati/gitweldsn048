@@ -1,6 +1,6 @@
 import { Stage, Layer, Group, Image, Text } from "react-konva";
 import useImage from "use-image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LeftShape from "./LeftShape";
 import RightShape from "./RightShape";
 import Degree from "./Degree";
@@ -21,14 +21,17 @@ function Index() {
     setText("");
   };
   //RightShape
+
   const [yt1, setYt1] = useState(245);
+  const [t1, sett1] = useState(452 - yt1);
+  // let t1 = 452 - yt1;
   const [y2Left, setY2Left] = useState(337);
   const [y3Left, setY3Left] = useState(343);
   const [y4Left, setY4Left] = useState(352);
   const [y5Left, setY5Left] = useState(356);
-  let t1 = 452 - yt1;
   const [yc, setYc] = useState(403);
-  let c = 452 - yc;
+  const [c, setC] = useState(452 - yc);
+  // let c = 452 - yc;
   const [alfa, setAlfa] = useState(70);
   let xAlfaRight = 574 + Math.tan(((alfa / 2) * Math.PI) / 180) * (t1 - c);
   const [xCordinateRightShape, setXCordinateRightShape] = useState(0);
@@ -71,7 +74,16 @@ function Index() {
     setXCordinateLeftShape(xCordinateLeftShape - 5);
     setXCordinateRightShape(xCordinateRightShape + 5);
   };
+  const t1Ref = useRef();
+  const cRef = useRef();
 
+  const handelOnClick = () => {
+    sett1(t1Ref.current.value);
+    setYt1(t1Ref.current.value - yt1);
+    setC(cRef.current.value);
+    setYc(cRef.current.value - yc);
+    console.log("t1" + t1);
+  };
   return (
     <>
       <button onClick={handelIncT1}>t1 +</button>
@@ -79,7 +91,12 @@ function Index() {
       <button onClick={handelIncC}>c +</button>
       <button onClick={handelIncB}>b +</button>
       <button onClick={handelIncAlfa}>Alfa +</button>
-
+      <button onClick={handelOnClick}>Create Shape</button>
+      <br />
+      <label>t1 : </label>
+      <input ref={t1Ref} type="number" />
+      <label>C : </label>
+      <input ref={cRef} type="number" />
       <Stage
         y={-45}
         width={window.innerWidth}
