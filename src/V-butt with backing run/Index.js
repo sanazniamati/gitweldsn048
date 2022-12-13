@@ -21,9 +21,8 @@ function Index() {
     setText("");
   };
   //RightShape
-
   const [yt1, setYt1] = useState(245);
-  const [t1, sett1] = useState(452 - yt1);
+  const [t1, sett1] = useState(452 - 245);
   // let t1 = 452 - yt1;
   const [y2Left, setY2Left] = useState(337);
   const [y3Left, setY3Left] = useState(343);
@@ -57,6 +56,7 @@ function Index() {
   };
   const handelIncT1 = () => {
     setYt1(yt1 - 10);
+    sett1(452 - yt1);
     setY2Right(y2Right - 5);
     setY3Right(y3Right - 5);
     setY4Right(y4Right - 5);
@@ -77,12 +77,20 @@ function Index() {
   const t1Ref = useRef();
   const cRef = useRef();
 
-  const handelOnClick = () => {
-    sett1(t1Ref.current.value);
-    setYt1(t1Ref.current.value - yt1);
-    setC(cRef.current.value);
-    setYc(cRef.current.value - yc);
-    console.log("t1" + t1);
+  // const handelOnClick = () => {
+  //   sett1(t1Ref.current.value);
+  //   setYt1(t1Ref.current.value - yt1);
+  //   setC(cRef.current.value);
+  //   setYc(cRef.current.value - yc);
+  //   // console.log("t1" + t1);
+  // };
+  const handelOnChangeT1 = (e) => {
+    sett1(e.target.value);
+    setYt1(452 - t1);
+  };
+  const handelOnChangeC = (e) => {
+    setC(e.target.value);
+    setYc(452 - c);
   };
   return (
     <>
@@ -91,12 +99,14 @@ function Index() {
       <button onClick={handelIncC}>c +</button>
       <button onClick={handelIncB}>b +</button>
       <button onClick={handelIncAlfa}>Alfa +</button>
-      <button onClick={handelOnClick}>Create Shape</button>
+      {/*<button onClick={handelOnClick}>Create Shape</button>*/}
       <br />
       <label>t1 : </label>
-      <input ref={t1Ref} type="number" />
+      <input type="number" value={t1} onChange={handelOnChangeT1} />
+
       <label>C : </label>
-      <input ref={cRef} type="number" />
+      <input type="number" value={c} onChange={handelOnChangeC} />
+
       <Stage
         y={-45}
         width={window.innerWidth}
@@ -107,7 +117,11 @@ function Index() {
         <Layer>
           <Group>
             {/*<Image x={100} y={10} image={image} />*/}
-            <Text text={text} x={10} y={50} fontSize={20} />
+            <Text text={"t1 : " + t1} x={10} y={50} fontSize={20} />
+            <Text text={"t1 : " + t1} x={10} y={50} fontSize={20} />
+            <Text text={"yT1 : " + yt1} x={180} y={50} fontSize={20} />
+            <Text text={"c : " + c} x={10} y={80} fontSize={20} />
+            <Text text={"yc : " + yc} x={180} y={80} fontSize={20} />
           </Group>
           {/* Left Shape */}
           <LeftShape
